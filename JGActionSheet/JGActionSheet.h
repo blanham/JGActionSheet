@@ -91,6 +91,23 @@ typedef NS_ENUM(NSUInteger, JGActionSheetArrowDirection) {
 + (instancetype)sectionWithTitle:(NSString *)title message:(NSString *)message contentView:(UIView *)contentView;
 
 /**
+ Initializes the section with buttons.
+ @param title The title of the section. (Optional)
+ @param message The message of the section. (Optional)
+ @param buttonTitles The titles for the buttons in the section.
+ @param buttonStyle The style to apply to the buttons. This can be altered later with the @c setButtonStyle:forButtonAtIndex: method
+ */
++ (instancetype)sectionWithAttributedTitle:(NSAttributedString *)title message:(NSAttributedString *)message buttonTitles:(NSArray *)buttonTitles buttonStyle:(JGActionSheetButtonStyle)buttonStyle;
+
+/**
+ Convenience initializer for the @c initWithTitle:message:contentView: method.
+ */
+- (instancetype)initWithAttributedTitle:(NSAttributedString *)title
+                                message:(NSAttributedString *)message
+                           buttonTitles:(NSArray *)buttonTitles
+                            buttonStyle:(JGActionSheetButtonStyle)buttonStyle;
+
+/**
  Initializes the section with a custom content view.
  @param title The title of the section. (Optional)
  @param message The message of the section. (Optional)

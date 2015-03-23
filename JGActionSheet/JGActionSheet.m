@@ -204,6 +204,72 @@ static BOOL disableCustomEasing = NO;
     return [self sectionWithTitle:nil message:nil buttonTitles:@[NSLocalizedString(@"Cancel",)] buttonStyle:JGActionSheetButtonStyleCancel];
 }
 
++ (instancetype)sectionWithAttributedTitle:(NSAttributedString *)title message:(NSAttributedString *)message buttonTitles:(NSArray *)buttonTitles buttonStyle:(JGActionSheetButtonStyle)buttonStyle {
+    return [[self alloc] initWithAttributedTitle:title message:message buttonTitles:buttonTitles buttonStyle:buttonStyle];
+}
+
+
+- (instancetype)initWithAttributedTitle:(NSAttributedString *)title
+                                message:(NSAttributedString *)message
+                           buttonTitles:(NSArray *)buttonTitles
+                            buttonStyle:(JGActionSheetButtonStyle)buttonStyle {
+    self = [super init];
+
+    if (self) {
+        if (title) {
+            UILabel *titleLabel = [[UILabel alloc] init];
+            titleLabel.backgroundColor = [UIColor clearColor];
+            titleLabel.textAlignment = NSTextAlignmentCenter;
+            //titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+            titleLabel.textColor = [UIColor blackColor];
+            titleLabel.numberOfLines = 1;
+
+            titleLabel.attributedText = title;
+
+            _titleLabel = titleLabel;
+
+            [self addSubview:_titleLabel];
+        }
+
+        if (message) {
+            UILabel *messageLabel = [[UILabel alloc] init];
+            messageLabel.backgroundColor = [UIColor clearColor];
+            messageLabel.textAlignment = NSTextAlignmentCenter;
+            //messageLabel.font = [UIFont systemFontOfSize:12.0f];
+            messageLabel.textColor = [UIColor blackColor];
+            messageLabel.numberOfLines = 0;
+
+            messageLabel.attributedText = message;
+
+            _messageLabel = messageLabel;
+
+            [self addSubview:_messageLabel];
+        }
+
+        if (buttonTitles.count) {
+            NSMutableArray *buttons = [NSMutableArray arrayWithCapacity:buttonTitles.count];
+
+            NSInteger index = 0;
+
+            for (NSString *str in buttonTitles) {
+                JGButton *b = [self makeButtonWithTitle:str style:buttonStyle];
+                b.row = (NSUInteger)index;
+
+                [self addSubview:b];
+
+                [buttons addObject:b];
+
+                index++;
+            }
+
+            _buttons = buttons.copy;
+        }
+    }
+
+    return self;
+}
+
+
 + (instancetype)sectionWithTitle:(NSString *)title message:(NSString *)message buttonTitles:(NSArray *)buttonTitles buttonStyle:(JGActionSheetButtonStyle)buttonStyle {
     return [[self alloc] initWithTitle:title message:message buttonTitles:buttonTitles buttonStyle:buttonStyle];
 }
